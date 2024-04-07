@@ -4,11 +4,15 @@ from flask_login import login_required,current_user
 from werkzeug.utils import secure_filename
 from uuid import uuid4
 import uuid
+from dotenv import load_dotenv
 import os
-from .env import UPLOAD_FOLDER
 
 bp = Blueprint("recipe", __name__)
 temp_dir = "recipe/"
+load_dotenv()
+
+UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER")
+
 
 @bp.route('/')
 @login_required

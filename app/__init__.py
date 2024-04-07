@@ -2,12 +2,15 @@ from flask import Flask
 from app.views import blueprints, login_manager
 from app.db.models import User
 from app.modules.my_sql import db
+from dotenv import load_dotenv
+import os
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'ygae@1!ffsyud@g&*ch%$avplz/d/615r&2vi21sgf(3fh*hu.x'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/recipes'
-    
+    load_dotenv()
+    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+
     for i in blueprints:
         app.register_blueprint(i)
     
