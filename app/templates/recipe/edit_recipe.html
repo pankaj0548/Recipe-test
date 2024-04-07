@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+</head>
+<body>
+    <main class="main" role="main">
+        <div class="wrap clearfix">
+          <nav class="breadcrumbs">
+            <ul>
+              <li><a href="{{ url_for('recipe.index') }}" title="Home">Home</a></li>
+            </ul>
+          </nav>
+          
+          <!--row-->
+          <div class="row">
+            <header class="s-title">
+              <h1>Make changes to your recipe</h1>
+            </header>
+                
+            <!--content-->
+            <section class="content full-width create-page">
+              <div class="submit_recipe container">
+                <form action="{{ url_for('recipe.edit_recipe', recipe_id=recipe.id) }}" method="POST" enctype="multipart/form-data">
+                  <section>
+                    <p>All fields are required.</p>
+                    <div class="f-row">
+                      <div class="full"><input type="text" id="title" name="title" value="{{ recipe.title }}" placeholder="Recipe title" required></div>
+                    </div>
+                    <div class="f-row">
+                      <div class="full"><textarea type="text" placeholder="Ingredients seperated by comma " id="ingredients" name="ingredients" required>{{ recipe.ingredients }}</textarea></div>
+                    </div>
+                    <div class="f-row">
+                        <div class="full"><textarea type="text" placeholder="Iinstructions" id="instructions" name="instructions" required>{{ recipe.instructions }}</textarea></div>
+                    </div>
+                    <div class="f-row">
+                        <div class="full"><input type="file" id="image" name="image" value="{{ recipe.image }}" placeholder="Recipe Image"></div>
+                    </div>
+                  </section>
+                  
+                  <section>
+                    <h2>Description</h2>
+                    <div class="f-row">
+                      <div class="full"><textarea id="description" name="description" placeholder="Recipe description">{{ recipe.description }}</textarea></div>
+                    </div>
+                  </section> 
+
+                  <div class="f-row full">
+                    <input type="submit" class="button" name="submit" id="submit" value="Publish this recipe">
+                  </div>
+                </form>
+              </div>
+            </section>
+            <!--//content-->
+          </div>
+          <!--//row-->
+        </div>
+        <!--//wrap-->
+      </main>
+</body>
+</html>

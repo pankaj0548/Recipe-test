@@ -1,0 +1,27 @@
+{% if error == "no_blog" %}
+    <h1 style="font-size: 24px;">
+        No Recipe Found
+    </h1>
+{% endif %}      
+{% for recipe in recipe_val %}
+    <section class="content three-fourth">
+        <div class="entries row">
+            <div class="entry one-third">
+                <figure>
+                    <img src="/static/img/uploads/{{ recipe.image }}" alt="Recipe Images">
+                    <figcaption>
+                        <a href="{{ url_for('recipe.recipe', recipe_id=recipe.id) }}">
+                            <span>View recipe</span>
+                        </a>
+                    </figcaption>
+                </figure>
+                <div class="container">
+                    <h2>
+                        <a href="{{ url_for('recipe.recipe', recipe_id=recipe.id) }}">{{recipe.title | truncate(30)}}</a>
+                    </h2>
+                    <p>{{recipe.description | truncate(50)}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endfor %}

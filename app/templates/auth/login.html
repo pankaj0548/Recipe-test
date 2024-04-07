@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Login</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+   </head>
+   <body>
+      <main class="main" role="main">
+         <!--wrap-->
+         <div class="wrap clearfix">
+             <!--row-->
+             <div class="row">
+                 <!--content-->
+                 <form method="POST" id="signup-form" class="content center full-width signup-form">
+                     <div class="modal container">
+                         <h3>Login</h3>
+                         {% with messages = get_flashed_messages(with_categories=true) %}
+                           {% if messages %}
+                              {% for category, message in messages %}
+                                 <span id="alert-msg" class="flash-{{ category }}">{{ message }}</span>
+                              {% endfor %}
+                           {% endif %}
+                        {% endwith %}
+                         <div class="f-row">
+                             <input type="text" name="email" id="email" placeholder="Your email">
+                         </div>
+                         <div class="f-row">
+                             <input type="password" name="password" id="password" placeholder="Your password">
+                         </div>
+                         <div class="f-row bwrap">
+                             <input type="submit" name="submit" id="submit" value="login">
+                         </div>
+                         <p>Don't have an account yet? <a href="{{ url_for('auth.signup') }}">Sign up.</a></p>
+                     </div>
+                  </form>
+                 <!--//content-->
+             </div>
+             <!--//row-->
+         </div>
+         <!--//wrap-->
+     </main>
+   </body>
+   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+   <script>
+      document.addEventListener("DOMContentLoaded", function() {
+         var alertMsg = document.getElementById("alert-msg");
+         if(alertMsg){
+               $("#alert-msg").delay(5000).fadeOut(1000);
+         }
+      });
+   </script>
+</html>

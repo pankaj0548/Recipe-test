@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{recipe.title}}</title>
+</head>
+<body>
+    <main class="main" role="main">
+		<div class="wrap clearfix">
+			<nav class="breadcrumbs">
+                <ul>
+                    <li>
+						<span style="display:none;" id="share-link">http://127.0.0.1:5000/recipe/{{ recipe.id }}</span>
+						<a id="copy-link" class="copy-btn"><span class="copy-text">Copy URL to share</span></a>
+                        {% if recipe.created_by == current_user.id %}
+                            <a href="{{ url_for('recipe.edit_recipe', recipe_id=recipe.id) }}">Edit Recipe</a>
+							<a href="{{ url_for('recipe.delete_recipe', recipe_id=recipe.id) }}">Delete Recipe</a>
+                        {% else %}
+							<a href="{{ url_for('recipe.create_recipe') }}">Create Your Own Recipe</a>
+                        {% endif %}
+						<a href="{{ url_for('recipe.index') }}" title="Home">Home</a>
+						<a href="{{ url_for('auth.logout') }}">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+			<div class="row">
+				<header class="s-title">
+					<h1>{{recipe.title}}</h1>
+				</header>
+				<section class="content three-fourth">
+						<div class="recipe">
+							<div class="row">
+								<article class="two-third">
+									<div class="image"><a href="#"><img src="/static/img/uploads/{{ recipe.image }}" alt="Recipe Images"></a></div>
+									<div class="intro">
+                                        <p><strong>{{recipe.description}}</strong></p>
+                                    </div>
+								</article>
+                                <aside class="two-third">
+                                    <div class="widget nutrition">
+                                    <p style="font-size: 25px;">Ingredients</p>
+                                    <ul>
+                                    {% for ingredients in recipe.ingredients.split(",")%}
+                                        <li>{{ingredients}}</li>
+                                    {% endfor %}
+                                    </ul>
+                                    </div>
+                                </article>
+							</div>
+						</div>
+				</section>
+				<!--//content-->
+				
+				<!--right sidebar-->
+				<aside class="sidebar one-fourth">
+					<div class="widget nutrition">
+                        <p>Instructions </p>
+						{{recipe.instructions}}
+					</div>
+				</aside>
+				<!--//right sidebar-->
+			</div>
+			<!--//row-->
+		</div>
+		<!--//wrap-->
+	</main>
+	<script>
+		document.getElementById("copy-link").addEventListener("click", function() {
+			var linkToCopy = document.getElementById("share-link").innerText;
+
+			var dummyTextArea = document.createElement("textarea");
+			dummyTextArea.value = linkToCopy;
+			document.body.appendChild(dummyTextArea);
+
+			navigator.clipboard.writeText(linkToCopy).then(function() {
+				var copyButton = document.getElementById("copy-link");
+				copyButton.querySelector(".copy-text").textContent = "Copied!";
+				copyButton.classList.add("copied");
+
+				setTimeout(function() {
+					copyButton.querySelector(".copy-text").textContent = "Copy URL to share";
+					copyButton.classList.remove("copied");
+				}, 2000);
+
+				document.body.removeChild(dummyTextArea);
+			}).catch(function(err) {
+				console.error('Could not copy text: ', err);
+			});
+		});
+	</script>
+</body>
+</html>

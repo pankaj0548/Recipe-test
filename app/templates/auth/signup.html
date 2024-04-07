@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Sign Up</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+      
+   </head>
+   <body>
+      <main class="main" role="main">
+        <!--wrap-->
+        <div class="wrap clearfix">
+            <!--row-->
+            <div class="row">
+                <!--content-->
+                <form method="POST" id="signup-form" class="content center full-width signup-form">
+                    <div class="modal container">
+                        <h3>Register</h3>
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <span id="alert-msg" class="flash-{{ category }}">{{ message }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        <div class="f-row">
+                            <input type="text" name="name" id="name" placeholder="Your Full Name" value="{{name}}" required>
+                        </div>
+                        <div class="f-row">
+                            <input type="email" name="email" id="email" placeholder="Your Email" value="{{email}}" required>
+                        </div>
+                        <div class="f-row">
+                            <input type="password" name="password" id="password" placeholder="Your password" required>
+                        </div>
+                        <div class="f-row">
+                            <input type="password" name="conf_pass" id="conf_pass" placeholder="Your password again" required>
+                        </div>
+                        
+                        <div class="f-row bwrap">
+                            <input type="submit" name="submit" id="submit" value="SignUp">
+                        </div>
+                        <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login.</a></p>
+                    </div>
+                </form>
+                <!--//content-->
+            </div>
+            <!--//row-->
+        </div>
+        <!--//wrap-->
+    </main>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+         document.addEventListener("DOMContentLoaded", function() {
+            var alertMsg = document.getElementById("alert-msg");
+            if(alertMsg){
+                  $("#alert-msg").delay(5000).fadeOut(1000);
+            }
+         });
+      </script>
+   </body>
+</html>

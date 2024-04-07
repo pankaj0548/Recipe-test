@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Manager</title>
+</head>
+<body>
+    <main class="main" role="main">
+        <div class="wrap clearfix">
+            <nav class="breadcrumbs">
+                <ul>
+                    <li>
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('recipe.create_recipe') }}">Create New Recipe</a>
+                            <a href="{{ url_for('auth.logout') }}">Logout</a>
+                        {% else %}
+                            <a href="{{ url_for('auth.login') }}">Login</a>
+                            <a href="{{ url_for('auth.signup') }}">Register</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+            <div class="row">
+                <header class="s-title">
+                    <h1>Recipes</h1>
+                </header>
+                <form role="search" method="" action="">
+                    <div class="recipe-serchBox">
+                      <div class="recipe-search-grid">
+                        <input type="text"  value=""  id="search" onkeyup ="blog_val(this)" placeholder="Search"> 
+                      </div>
+                    </div>
+                </form>
+                <div id="load_recipe">
+                    {% for recipe in recipes.items %}
+                        <section class="content three-fourth">
+                            <div class="entries row">
+                                <div class="entry one-third">
+                                    <figure>
+                                        <img src="/static/img/uploads/{{ recipe.image }}" alt="Recipe Images">
+                                        <figcaption><a href="{{ url_for('recipe.recipe', recipe_id=recipe.id) }}"><span>View recipe</span></a></figcaption>
+                                    </figure>
+                                    <div class="container">
+                                        <h2><a href="{{ url_for('recipe.recipe', recipe_id=recipe.id) }}">{{recipe.title | truncate(30)}}</a></h2>
+                                        <p>{{recipe.description | truncate(50)}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    {% endfor %}
+                    
+                    <div class="quicklinks">
+                        {% if recipes.has_prev %}
+                            <a href="{{ url_for('recipe.index', page=recipes.prev_num) }}" class="button">Previous</a>
+                        {% endif %}
+                        {% if recipes.has_next %}
+                            <a href="{{ url_for('recipe.index', page=recipes.next_num) }}" class="button scroll-to-top">Next</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function blog_val(ths){
+            var search = $('#search').val();
+            var url = '{{ url_for('recipe.load_recipes') }}';
+            $.ajax({
+                url: url,
+                data : {
+                    'search' : search,
+                },
+                method : 'POST',
+                success: function (data) {
+                    $("#load_recipe").html(data);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
