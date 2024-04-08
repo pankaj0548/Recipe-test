@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 
 class User(UserMixin, db.Model):
     id = db.Column(db.String(50), primary_key=True)
-    name = db.Column(db.String(50), unique=True, nullable=False)
+    name = db.Column(db.String(50),  nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     recipes = relationship('Recipe', backref='author', lazy=True)

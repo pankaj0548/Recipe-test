@@ -18,7 +18,7 @@ class AuthTestCase(unittest.TestCase):
     def test_login(self):
         self.app.post('/register', data={'name':'Test User','email': 'test_user', 'password': '1234','conf_pass':'1234'}, follow_redirects=True)
         response = self.app.post('/login', data={'email': 'test_user', 'password': '1234'}, follow_redirects=True)
-        self.assertIn(b'Recipe', response.data)
+        self.assertIn(b'Recipe Manager', response.data)
 
     def test_logout(self):
         self.app.post('/register', data={'name':'Test User','email': 'test_user', 'password': '1234','conf_pass':'1234'}, follow_redirects=True)
