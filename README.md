@@ -74,17 +74,17 @@ This repository contains the SQL schema for a recipe application database. The s
 
 **Table Descriptions**
 
-    **User Table:**
-        **id**: Unique identifier for each user (Primary Key).
-        **name**: Name of the user.
-        **email**: Email address of the user (unique).
-        **password**: Password associated with the user's account.
+**User Table:**
+    **id**: Unique identifier for each user (Primary Key).
+    **name**: Name of the user.
+    **email**: Email address of the user (unique).
+    **password**: Password associated with the user's account.
 
-    **Recipe Table**
-        **id**: Unique identifier for each recipe (Primary Key).
-        **image**: URL or file path for the recipe image (nullable).
-        **title**: Title of the recipe.
-        **description**: Brief description or summary of the recipe.
+**Recipe Table**
+    **id**: Unique identifier for each recipe (Primary Key).
+    **image**: URL or file path for the recipe image (nullable).
+    **title**: Title of the recipe.
+    **description**: Brief description or summary of the recipe.
         **ingredients**: List of ingredients required for the recipe.
         **instructions**: Step-by-step instructions for preparing the recipe.
         **created_by**: ID of the user who created the recipe (Foreign Key referencing the id column of the User table).
