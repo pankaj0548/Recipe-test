@@ -65,6 +65,7 @@ After installing the requirements, you can run the Flask application using the f
 
 ```bash
 python run.py
+```
 
 
 ## Recipe App Database Schema
